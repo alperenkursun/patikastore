@@ -1,23 +1,60 @@
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  FlatList,
+  ScrollView,
+} from "react-native";
+import Product from "./components/Product/index.js";
+import products_data from "./products_data.json";
 
+const data = products_data;
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>PATIKASTORE</Text>
-      <TextInput style={styles.search} placeholder="Ara..."></TextInput>
-      <View style={styles.productsContainer}>
-        <View style={styles.view1}></View>
-        <View style={styles.view2}></View>
+    <ScrollView style={styles.container}>
+      <View>
+        <Text style={styles.header}>PATIKASTORE</Text>
+        <TextInput style={styles.search} placeholder="Ara..."></TextInput>
+        <View style={styles.productsContainer}>
+          <ScrollView>
+            <FlatList
+              data={data}
+              numColumns={2}
+              renderItem={({ item }) => (
+                <Product
+                  title={item.title}
+                  price={item.price}
+                  imgURL={item.imgURL}
+                  inStock={item.inStock}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+              horizontal={false}
+            />
+          </ScrollView>
+          {/* <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product /> */}
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexWrap: "wrap",
     width: "100%",
-    padding: 15,
+    flexDirection: "column",
+    // padding: 15,
   },
   header: {
     fontSize: 24,
@@ -35,20 +72,7 @@ const styles = StyleSheet.create({
   productsContainer: {
     flexDirection: "row",
     marginTop: 20,
-    gap: 10,
     flexWrap: "wrap",
-    flex: 1,
-  },
-  view1: {
-    backgroundColor: "red",
-    width: "50%",
-    height: 10,
-    flex: 1,
-  },
-  view2: {
-    backgroundColor: "blue",
-    width: "50%",
-    height: 10,
-    flex: 1,
+    // flex: 1,
   },
 });
